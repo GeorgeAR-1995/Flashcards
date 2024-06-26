@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 // import reducers
+import topicsReducer from '../features/topics/topicsSlice';
 
-export default configureStore({
+const store = configureStore({
   reducer: {
-    
-  },
+    topics: topicsReducer
+  }
 });
+
+export default store;
