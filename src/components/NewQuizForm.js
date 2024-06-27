@@ -33,6 +33,7 @@ export default function NewQuizForm() {
       topicId,
       cardIds
     };
+    
     // dispatch add quiz action 
     dispatch(addQuiz(newQuiz));
     dispatch(addQuizIdToTopic(newQuiz));

@@ -6,7 +6,7 @@ import quizzesReducer from '../features/quizzes/quizzesSlice'
 const store = configureStore({
   reducer: {
     topics: topicsReducer,
-    quizzes: quizzesReducer
+    quizzes: quizzesReducer,
   }
 });
 
