@@ -18,31 +18,36 @@ export default function NewQuizForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("handleSubmit called");
     if (name.length === 0 || topicId.length === 0) {
+      console.log("Name or topicId is empty");
       return;
     }
 
     const cardIds = cards.map((card) => {
       const cardId = uuidv4();
-      dispatch(addCard({ id, front: card.front, back: card.back }));
+      dispatch(addCard({ id: cardId, front: card.front, back: card.back }));
       return cardId;
     });
-    // create the new cards here and add each card's id to cardIds
 
     // create the new quiz here
 
-    const id = uuidv4();
+    const quizId = uuidv4();
     const newQuiz = {
-      id,
+      id: quizId,
       name,
       topicId,
       cardIds
     };
-    
-    // dispatch add quiz action 
-    dispatch(addQuiz(newQuiz));
-    dispatch(addQuizIdToTopic({ quizId: id, topicId }));
 
+
+    
+    console.log("Dispatching addQuiz with:", newQuiz);
+    dispatch(addQuiz(newQuiz));
+    console.log("Dispatching addQuizIdToTopic");
+    dispatch(addQuizIdToTopic({ quizId: newQuiz.id, topicId }));
+
+    console.log("Navigating to quizzes route");
     navigate(ROUTES.quizzesRoute())
   };
 
@@ -114,8 +119,15 @@ export default function NewQuizForm() {
         ))}
         <div className="actions-container">
           <button onClick={addCardInputs}>Add a Card</button>
-          <button type="submit">Create Quiz</button>
+          <button type="submit" disabled={Object.keys(topics).length === 0}>
+            Create Quiz
+          </button>
         </div>
+
+        {Object.keys(topics).length === 0 && (
+          <p>Please create a topic before creating a quiz.</p>
+        )}
+
       </form>
     </section>
   );
